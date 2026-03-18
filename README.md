@@ -10,3 +10,30 @@ This VisionProctor system successfully bridges the gap between deep learning res
 * **Real-Time Inference Pipeline:** Uses a Cascade-CNN Hybrid approach (Haar Cascades + CNN) for person-agnostic eye tracking.
 * **Auto-Calibration Layer:** Includes a real-time calibration step (stare-at-center) to establish a baseline for different environments and users.
 * **Violation Detection:** Implements a status buffer logic to detect and flag gaze deviations (potential proctoring violations) in real-time.time.
+
+
+## 🏗️ Technical Architecture
+
+### 1. Data Engineering (Phase A)
+* **Dataset:** MPIIGaze (213,659 images from 15 subjects).
+* **Preprocessing:** Histogram equalization, resizing (64x64), and normalization.
+* **Serialization:** Data is stored in binary `.npy` format using `uint8` to save 75% more disk space compared to floating-point storage.
+
+### 2. Model Development (Phase B)
+The system utilizes a **Sequential CNN** architecture optimized for regression:
+
+* **Convolutional Layers:** 3 layers (32, 64, and 128 filters) with `Batch Normalization` and `Max Pooling`.
+* **Fully Connected Layers:** Dense layers (128 and 64 units) with `Dropout` (0.3) for regularization.
+* **Loss Function:** **Mean Squared Error (MSE)** for predicting continuous pitch and yaw coordinates.
+
+### 3. Live Deployment (Phase C)
+* **Detection:** `cv2.CascadeClassifier` for rapid eye region localization.
+* **Inference:** TensorFlow/Keras model processing **ROI** (Region of Interest) at a $0.0005$ learning rate.
+* **Visualization:** Real-time gaze vector projection and status flagging (`SAFE` vs. `VIOLATION`).
+
+
+## 📊 Performance
+
+* **Total Parameters:** `3,451,080`
+* **Trainable Parameters:** `1,150,210`
+* **Model Convergence:** Successfully converged to an average epoch loss of ~`0.0044` across 10 epochs.
