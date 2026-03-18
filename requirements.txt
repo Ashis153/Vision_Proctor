@@ -1,0 +1,15 @@
+# Data Engineering & Math
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+tqdm>=4.66.0
+
+# Deep Learning (TensorFlow/Keras)
+tensorflow>=2.16.1
+
+# Computer Vision & Image Processing
+opencv-python>=4.9.0
+opencv-contrib-python>=4.9.0
+
+# Utilities
+glob2>=0.7
